@@ -18,7 +18,8 @@ app.get("/solutions/projects", async (req, res) => {
 
 app.get("/solutions/projects/id-demo", async (req, res) => {
     try {
-        res.send(await projectData.getProjectById(100));
+        res.send(await projectData.getProjectById(1));
+        // res.send(await projectData.getProjectById(100)); // invalid id
     } catch (error) {
         res.status(404).send(error.message);
     }
@@ -27,6 +28,7 @@ app.get("/solutions/projects/id-demo", async (req, res) => {
 app.get("/solutions/projects/sector-demo", async (req, res) => {
     try {
         res.send(await projectData.getProjectsBySector("Agriculture"));
+        // res.send(await projectData.getProjectsBySector("Game")); // invalid sector
     } catch (error) {
         res.status(404).send(error.message);
     }
