@@ -20,7 +20,7 @@ app.get("/solutions/projects/id-demo", async (req, res) => {
     try {
         res.send(await projectData.getProjectById(100));
     } catch (error) {
-        res.send(error.message);
+        res.status(404).send(error.message);
     }
 });
 
@@ -28,7 +28,7 @@ app.get("/solutions/projects/sector-demo", async (req, res) => {
     try {
         res.send(await projectData.getProjectsBySector("Agriculture"));
     } catch (error) {
-        res.send(error.message);
+        res.status(404).send(error.message);
     }
 });
 
