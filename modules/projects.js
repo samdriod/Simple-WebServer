@@ -33,7 +33,7 @@ function getProjectsBySector(sectorStr) {
     const matchedSec = projects.filter(proj =>
         proj.sector.toLowerCase().includes(sectorStr.toLowerCase())
         );
-    return matchedSec ? Promise.resolve(matchedSec) : Promise.reject(new Error("Unable to find requested project"));
+    return matchedSec.length != 0 ? Promise.resolve(matchedSec) : Promise.reject(new Error("Unable to find requested project"));
 }
 
 module.exports = {Initialize, getAllProjects, getProjectById, getProjectsBySector};
