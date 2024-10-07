@@ -13,8 +13,6 @@ const projectData = require("./modules/projects");
 
 projectData.Initialize();
 
-console
-
 let app = express();
 let HTTP_PORT = process.env.PORT || 8080;
 
