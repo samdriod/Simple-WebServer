@@ -21,6 +21,10 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/views/home.html"));
 });
 
+app.get("/about", (req, res) => {
+    res.sendFile(path.join(__dirname, "/public/views/about.html"));
+});
+
 app.get("/solutions/projects", async (req, res) => {
     res.send(await projectData.getAllProjects());
 });
