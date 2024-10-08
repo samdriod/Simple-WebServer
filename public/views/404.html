@@ -1,12 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/main.css">
     <title>Page not found</title>
 </head>
+
 <body>
-    
+    <div class="navbar bg-base-100">
+        <div class="flex-1">
+            <a class="btn btn-ghost normal-case text-xl" href="/">Climate Solutions</a>
+        </div>
+        <div class="flex-none">
+            <ul class="menu menu-horizontal px-1 space-x-1">
+                <li><a href="/about">About</a></li>
+                <li>
+                    <details>
+                        <summary>Summary</summary>
+                        <ul class="p-2 bg-base-100">
+                            <li>
+                                <a href="/solutions/projects?sector=someSector">someSector</a>
+                            </li>
+                            <li>
+                                <a href="/solutions/projects?sector=someSector">someSector</a>
+                            </li>
+                            <li>
+                                <a href="/solutions/projects?sector=someSector">someSector</a>
+                            </li>
+                        </ul>
+                    </details>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container mx-auto px-5">
+        <div class="hero bg-base-200 min-h-screen">
+            <div class="hero-content text-center">
+                <div class="max-w-md">
+                    <h1 class="text-5xl font-bold">404</h1>
+                    <p class="py-6">
+                        Oops! The page you're looking for can't be found. 😕 It might have been removed, had its name changed, or is temporarily unavailable.
+                    </p>
+                    <button class="btn btn-primary"><a href="/">Return Home</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
