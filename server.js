@@ -14,7 +14,8 @@ const projectData = require("./modules/projects");
 projectData.Initialize();
 
 let app = express();
-let HTTP_PORT = process.env.PORT || 8080;
+let HTTP_PORT = process.env.PORT || 3000;
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
     res.send("Assignment 2: Samip Kari - 141867234");
