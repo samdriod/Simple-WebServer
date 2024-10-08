@@ -8,7 +8,45 @@
   </head>
   <body>
     <div class="navbar bg-base-100">
-      <a class="btn btn-ghost text-xl">daisyUI</a>
+      <div class="flex-1">
+        <a class="btn btn-ghost normal-case text-xl" href="/"
+          >Climate Solutions</a
+        >
+      </div>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+          <li><a href="/about">About</a></li>
+          <li>
+            <details>
+              <summary>Summary</summary>
+              <ul class="p-2 bg-base-100">
+                <li>
+                  <a href="/solutions/projects?sector=someSector">someSector</a>
+                </li>
+                <li>
+                  <a href="/solutions/projects?sector=someSector">someSector</a>
+                </li>
+                <li>
+                  <a href="/solutions/projects?sector=someSector">someSector</a>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="container mx-auto px-10">
+      <div class="hero bg-base-200 min-h-screen">
+        <div class="hero-content text-center">
+          <div class="max-w-md">
+            <h1 class="text-5xl font-bold">Welcome to Climate Solutions</h1>
+            <p class="py-6">
+              Discover innovative projects and initiatives aimed at combating climate change. Join us in making a positive impact on our planet by exploring sustainable solutions and taking action today.
+            </p>
+            <button class="btn btn-primary"><a href="/solutions/projects">Get Started</a></button>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
