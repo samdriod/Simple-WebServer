@@ -7,8 +7,8 @@
 * Name: Samip Karki Student      ID: 141867234      Date: 2024/09/27
 * Published URL: https://simple-web-server-one.vercel.app/
 ********************************************************************************/
-
 const express = require("express");
+const path = require('path');
 const projectData = require("./modules/projects");
 
 projectData.Initialize();
@@ -18,7 +18,7 @@ let HTTP_PORT = process.env.PORT || 3000;
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-    res.send("Assignment 2: Samip Kari - 141867234");
+    res.sendFile(path.join(__dirname, "/public/views/home.html"));
 });
 
 app.get("/solutions/projects", async (req, res) => {
