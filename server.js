@@ -27,7 +27,7 @@ app.get("/about", (req, res) => {
 
 app.get("/solutions/projects", async (req, res) => {
     try {
-        if (req.query.sector === "Land%Sinks") {
+        if (req.query.sector === "Land Sinks") {
             res.send(await projectData.getProjectsBySector("Land Sinks"));
           } else if (req.query.sector === "Industry") {
             res.send(await projectData.getProjectsBySector("Industry"));
