@@ -31,27 +31,31 @@ app.get("/about", (req, res) => {
 });
 
 app.get("/solutions/projects", async (req, res) => {
-  res.send(await projectData.getAllProjects());
+    try {
+        if (req.query.sector == "Land%Sinks") {
+            res.send(await projectData.getProjectsBySector("Land Sinks"));
+          } else if (req.query.sector == "Industry") {
+            res.send(await projectData.getProjectsBySector("Industry"));
+          } else if (req.query.sector == "Transportation") {
+            res.send(await projectData.getProjectsBySector("Transportation"));
+          } else {
+            res.send(await projectData.getAllProjects());
+          }
+    } catch (error) {
+       res.status(404).send(error.message); 
+    }
 });
 
-app.get("/solutions/projects/id-demo", async (req, res) => {
+app.get("/solutions/projects/:id", async (req, res) => {
   try {
-    res.send(await projectData.getProjectById(1));
-  } catch (error) {
-    res.status(404).send(error.message);
-  }
-});
-
-app.get("/solutions/projects/sector-demo", async (req, res) => {
-  try {
-    res.send(await projectData.getProjectsBySector("Agriculture"));
+    res.send(await projectData.getProjectById(parseInt(req.params.id)));
   } catch (error) {
     res.status(404).send(error.message);
   }
 });
 
 app.use((req, res, next) => {
-    res.sendFile(path.join(__dirname, "public/views/404.html"));
+  res.sendFile(path.join(__dirname, "public/views/404.html"));
 });
 
 app.listen(HTTP_PORT, () => {
