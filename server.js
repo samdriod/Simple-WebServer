@@ -17,11 +17,6 @@ let app = express();
 let HTTP_PORT = process.env.PORT || 3000;
 app.use(express.static("public"));
 
-// app.use((req, res, next) => {
-//   console.log(`Request from: ${req.get("user-agent")} [${new Date()}]`);
-//   next();
-// });
-
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/views/home.html"));
 });
