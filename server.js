@@ -27,11 +27,11 @@ app.get("/about", (req, res) => {
 
 app.get("/solutions/projects", async (req, res) => {
     try {
-        if (req.query.sector == "Land%Sinks") {
+        if (req.query.sector === "Land%Sinks") {
             res.send(await projectData.getProjectsBySector("Land Sinks"));
-          } else if (req.query.sector == "Industry") {
+          } else if (req.query.sector === "Industry") {
             res.send(await projectData.getProjectsBySector("Industry"));
-          } else if (req.query.sector == "Transportation") {
+          } else if (req.query.sector === "Transportation") {
             res.send(await projectData.getProjectsBySector("Transportation"));
           } else {
             res.send(await projectData.getAllProjects());
@@ -54,5 +54,5 @@ app.use((req, res, next) => {
 });
 
 app.listen(HTTP_PORT, () => {
-  console.log(`hello from ${HTTP_PORT}`);
+  console.log(`Listening on ${HTTP_PORT}`);
 });
