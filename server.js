@@ -16,14 +16,17 @@ projectData.Initialize();
 
 let app = express();
 let HTTP_PORT = process.env.PORT || 3000;
+
 app.use(express.static("public"));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "/public/views"));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "/public/views/home.html"));
+  res.render(path.join(__dirname, "/public/views/home.ejs"));
 });
 
 app.get("/about", (req, res) => {
-  res.sendFile(path.join(__dirname, "/public/views/about.html"));
+  res.render(path.join(__dirname, "/public/views/about.ejs"));
 });
 
 app.get("/solutions/projects", async (req, res) => {
@@ -51,7 +54,7 @@ app.get("/solutions/projects/:id", async (req, res) => {
 });
 
 app.use((req, res, next) => {
-  res.sendFile(path.join(__dirname, "public/views/404.html"));
+  res.render(path.join(__dirname, "public/views/404.ejs"));
 });
 
 app.listen(HTTP_PORT, () => {
