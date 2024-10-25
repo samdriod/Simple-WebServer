@@ -5,8 +5,9 @@
     <div class="flex-none">
         <ul class="menu menu-horizontal px-8 space-x-2">
             <li>
-                <a href="/about" class="<%= (route === "/about") ? "active" : "" %>">About</a>
-                <!-- <% if (route === "/about") { %>
+                <a href="/about" class="<%= (page === "/about") ? "active" : "" %>">About</a>
+                <!-- Potentially flexible way to do this ? -->
+                <!-- <% if (page === "/about") { %>
                     <a href="/about" class="active">About</a>
                 <% } else { %>
                     <a href="/about">About</a>
