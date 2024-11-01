@@ -51,7 +51,9 @@ app.get("/solutions/projects", async (req, res) => {
 
 app.get("/solutions/projects/:id", async (req, res) => {
   try {
-    res.send(await projectData.getProjectById(parseInt(req.params.id)));
+    // res.send(await projectData.getProjectById(parseInt(req.params.id)));
+    let data = await projectData.getProjectById(parseInt(req.params.id));
+    res.render(path.join(__dirname, "/public/views/project.ejs"), { project: data});
   } catch (error) {
     res.status(404).send(error.message);
   }
