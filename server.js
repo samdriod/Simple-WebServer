@@ -1,5 +1,5 @@
 /*********************************************************************************
- * BTI325 – Assignment 3
+ * BTI325 – Assignment 4
  * I declare that this assignment is my own work in accordance with Seneca Academic Policy.
  * No part of this assignment has been copied manually or electronically from any other source
  * (including web sites) or distributed to other students.
@@ -38,7 +38,8 @@ app.get("/solutions/projects", async (req, res) => {
           } else if (req.query.sector === "Transportation") {
             res.send(await projectData.getProjectsBySector("Transportation"));
           } else {
-            res.send(await projectData.getAllProjects());
+            let data = await projectData.getAllProjects();
+            res.render(path.join(__dirname, "/public/views/projects.ejs"), { projects: data});
           }
     } catch (error) {
        res.status(404).send(error.message); 

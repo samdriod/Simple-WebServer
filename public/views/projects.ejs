@@ -21,11 +21,41 @@
                         </p>
                         <div class="space-x-1">
                             <a href="/solutions/projects?sector=Industry" class="btn btn-primary btn-xs">Industry</a>
-                            <a href="/solutions/projects?sector=Transportation" class="btn btn-primary btn-xs">Transportation</a>
-                            <a href="/solutions/projects?sector=Land%20Sinks" class="btn btn-primary btn-xs">Land Sinks</a>
+                            <a href="/solutions/projects?sector=Transportation"
+                                class="btn btn-primary btn-xs">Transportation</a>
+                            <a href="/solutions/projects?sector=Land%20Sinks" class="btn btn-primary btn-xs">Land
+                                Sinks</a>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="table w-full border-collapse border">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Sector</th>
+                            <th>Summary</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% projects.forEach(project => { %> 
+                        <tr>
+                            <td>
+                                <div class="font-bold"><%= project.title %></div>
+                            </td>
+                            <th>
+                                <a href=<%= "/solutions/projects/?sector=" + encodeURIComponent(project.sector) %> class="btn btn-ghost btn-xs"><%= project.sector %></a>
+                            </th>
+                            <td><%= project.summary_short %></td>
+                            <th>
+                                <a href=<%= "/solutions/projects/" + project.id %> class="btn btn-ghost btn-xs">Details</a>
+                            </th>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
             </div>
         </div>
 </body>
