@@ -34,9 +34,9 @@
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Sector</th>
-                            <th>Summary</th>
-                            <th>Actions</th>
+                            <th class="text-center">Sector</th>
+                            <th class="text-center">Summary</th>
+                            <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,9 +45,9 @@
                             <td>
                                 <div class="font-bold"><%= project.title %></div>
                             </td>
-                            <th>
+                            <td class="text-center">
                                 <a href=<%= "/solutions/projects/?sector=" + encodeURIComponent(project.sector) %> class="btn btn-ghost btn-xs"><%= project.sector %></a>
-                            </th>
+                            </td>
                             <td><%= project.summary_short %></td>
                             <th>
                                 <a href=<%= "/solutions/projects/" + project.id %> class="btn btn-ghost btn-xs">Details</a>
