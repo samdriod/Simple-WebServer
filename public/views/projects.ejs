@@ -46,11 +46,11 @@
                                 <div class="font-bold"><%= project.title %></div>
                             </td>
                             <td class="text-center">
-                                <a href=<%= "/solutions/projects/?sector=" + encodeURIComponent(project.sector) %> class="btn btn-ghost btn-xs"><%= project.sector %></a>
+                                <a href=<%= "/solutions/projects/?sector=" + encodeURIComponent(project.sector) %> class="btn btn-ghost btn-xs w-full h-full"><%= project.sector %></a>
                             </td>
                             <td><%= project.summary_short %></td>
                             <th>
-                                <a href=<%= "/solutions/projects/" + project.id %> class="btn btn-ghost btn-xs">Details</a>
+                                <a href=<%= "/solutions/projects/" + project.id %> class="btn btn-ghost btn-xs w-full h-full">Details</a>
                             </th>
                         </tr>
                         <% }); %>
