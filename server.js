@@ -12,8 +12,6 @@ const express = require("express");
 const path = require("path");
 const projectData = require("./modules/projects");
 
-projectData.Initialize();
-
 let app = express();
 let HTTP_PORT = process.env.PORT || 3000;
 
@@ -32,7 +30,7 @@ app.get("/about", (req, res) => {
 app.get("/solutions/projects", async (req, res) => {
   try {
     let data;
-    if (Object.keys(req.query).length ===0) {
+    if (Object.keys(req.query).length === 0) {
       data = await projectData.getAllProjects();
     } else if (req.query.sector === "Land Sinks") {
       data = await projectData.getProjectsBySector("Land Sinks");
@@ -48,23 +46,37 @@ app.get("/solutions/projects", async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
-    res.status(404).render(path.join(__dirname, "public/views/404.ejs"), {message: `No projects found for sector: ${req.query.sector}.`});
+    res.status(404).render(path.join(__dirname, "public/views/404.ejs"), {
+      message: `No projects found for sector: ${req.query.sector}.`,
+    });
   }
 });
 
 app.get("/solutions/projects/:id", async (req, res) => {
   try {
     let data = await projectData.getProjectById(parseInt(req.params.id));
-    res.render(path.join(__dirname, "/public/views/project.ejs"), { project: data});
+    res.render(path.join(__dirname, "/public/views/project.ejs"), {
+      project: data,
+    });
   } catch (error) {
-    res.status(404).render(path.join(__dirname, "public/views/404.ejs"), {message: "Unable to find requested project."});
+    res.status(404).render(path.join(__dirname, "public/views/404.ejs"), {
+      message: "Unable to find requested project.",
+    });
   }
 });
 
 app.use((req, res, next) => {
-  res.render(path.join(__dirname, "public/views/404.ejs"), {message : "I'm sorry, we're unable to find what you're looking for."});
+  res.render(path.join(__dirname, "public/views/404.ejs"), {
+    message: "I'm sorry, we're unable to find what you're looking for.",
+  });
 });
 
-app.listen(HTTP_PORT, () => {
-  console.log(`Listening on ${HTTP_PORT}`);
-});
+projectData
+  .Initialize()
+  .then((message) => {
+    console.log("Data loaded");
+    app.listen(HTTP_PORT, () => {
+      console.log(`Listening on ${HTTP_PORT}`);
+    });
+  })
+  .catch((error) => console.error(`Data not loaded, Error: ${error.message}`));
