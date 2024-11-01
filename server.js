@@ -6,7 +6,7 @@
  *
  * Name: Samip Karki Student      ID: 141867234      Date: 2024/09/27
  * Published URL: https://climatesolutions.vercel.app/
- * URL maybe subject to change please pull from github and check the README for latest URL 
+ * URL maybe subject to change please pull from github and check the README for latest URL
  ********************************************************************************/
 const express = require("express");
 const path = require("path");
@@ -30,20 +30,23 @@ app.get("/about", (req, res) => {
 });
 
 app.get("/solutions/projects", async (req, res) => {
-    try {
-        if (req.query.sector === "Land Sinks") {
-            res.send(await projectData.getProjectsBySector("Land Sinks"));
-          } else if (req.query.sector === "Industry") {
-            res.send(await projectData.getProjectsBySector("Industry"));
-          } else if (req.query.sector === "Transportation") {
-            res.send(await projectData.getProjectsBySector("Transportation"));
-          } else {
-            let data = await projectData.getAllProjects();
-            res.render(path.join(__dirname, "/public/views/projects.ejs"), { projects: data});
-          }
-    } catch (error) {
-       res.status(404).send(error.message); 
+  try {
+    let data;
+    if (req.query.sector === "Land Sinks") {
+      data = await projectData.getProjectsBySector("Land Sinks");
+    } else if (req.query.sector === "Industry") {
+      data = await projectData.getProjectsBySector("Industry");
+    } else if (req.query.sector === "Transportation") {
+      data = await projectData.getProjectsBySector("Transportation");
+    } else {
+      data = await projectData.getAllProjects();
     }
+    res.render(path.join(__dirname, "/public/views/projects.ejs"), {
+      projects: data,
+    });
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
 });
 
 app.get("/solutions/projects/:id", async (req, res) => {
