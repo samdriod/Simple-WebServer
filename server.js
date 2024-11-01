@@ -32,35 +32,37 @@ app.get("/about", (req, res) => {
 app.get("/solutions/projects", async (req, res) => {
   try {
     let data;
-    if (req.query.sector === "Land Sinks") {
+    if (Object.keys(req.query).length ===0) {
+      data = await projectData.getAllProjects();
+    } else if (req.query.sector === "Land Sinks") {
       data = await projectData.getProjectsBySector("Land Sinks");
     } else if (req.query.sector === "Industry") {
       data = await projectData.getProjectsBySector("Industry");
     } else if (req.query.sector === "Transportation") {
       data = await projectData.getProjectsBySector("Transportation");
     } else {
-      data = await projectData.getAllProjects();
+      throw new Error("Invalid sector");
     }
     res.render(path.join(__dirname, "/public/views/projects.ejs"), {
       projects: data,
     });
   } catch (error) {
-    res.status(404).send(error.message);
+    console.log(error.message);
+    res.status(404).render(path.join(__dirname, "public/views/404.ejs"), {message: `No projects found for sector: ${req.query.sector}.`});
   }
 });
 
 app.get("/solutions/projects/:id", async (req, res) => {
   try {
-    // res.send(await projectData.getProjectById(parseInt(req.params.id)));
     let data = await projectData.getProjectById(parseInt(req.params.id));
     res.render(path.join(__dirname, "/public/views/project.ejs"), { project: data});
   } catch (error) {
-    res.status(404).send(error.message);
+    res.status(404).render(path.join(__dirname, "public/views/404.ejs"), {message: "Unable to find requested project."});
   }
 });
 
 app.use((req, res, next) => {
-  res.render(path.join(__dirname, "public/views/404.ejs"));
+  res.render(path.join(__dirname, "public/views/404.ejs"), {message : "I'm sorry, we're unable to find what you're looking for."});
 });
 
 app.listen(HTTP_PORT, () => {
