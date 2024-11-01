@@ -5,33 +5,11 @@
     <div class="flex-none">
         <ul class="menu menu-horizontal px-8 space-x-2">
             <li>
-                <a href="/solutions/projects">View Projects</a>
+                <a href="/solutions/projects" class="<%= (page === "/solutions/projects") ? "active" : "" %>">View Projects</a>
             </li>
             <li>
                 <a href="/about" class="<%= (page === "/about") ? "active" : "" %>">About</a>
-                <!-- Potentially flexible way to do this ? -->
-                <!-- <% if (page === "/about") { %>
-                    <a href="/about" class="active">About</a>
-                <% } else { %>
-                    <a href="/about">About</a>
-                <% } %> -->
             </li>
-            <!-- <li>
-                <details class="relative">
-                    <summary>Summary</summary>
-                    <ul class="p-1 bg-base-100 absolute left-0">
-                        <li>
-                            <a href="/solutions/projects?sector=Land%20Sinks">Land Sinks</a>
-                        </li>
-                        <li>
-                            <a href="/solutions/projects?sector=Industry">Industry</a>
-                        </li>
-                        <li>
-                            <a href="/solutions/projects?sector=Transportation">Transportation</a>
-                        </li>
-                    </ul>
-                </details>
-            </li> -->
         </ul>
     </div>
 </div>
