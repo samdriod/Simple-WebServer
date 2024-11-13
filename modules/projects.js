@@ -1,5 +1,5 @@
-const projectData = require("../data/projectData.json");
-const sectorData = require("../data/sectorData.json");
+// const projectData = require("../data/projectData.json");
+// const sectorData = require("../data/sectorData.json");
 
 require("dotenv").config();
 require("pg");
@@ -69,23 +69,17 @@ const Project = sequelize.define(
 // Sector.hasMany(Project, {foreignKey: "sector_id"});
 Project.belongsTo(Sector, { foreignKey: "sector_id" });
 
-let projects = [];
-
 function Initialize() {
-  projects = JSON.parse(JSON.stringify(projectData));
-
-  let secMap = new Map();
-  sectorData.forEach((sec) => {
-    secMap.set(sec.id, sec.sector_name);
+  return new Promise((resolve, reject) => {
+    sequelize
+      .sync()
+      .then(() => {
+        resolve();
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
-
-  projects.forEach((proj) => {
-    if (secMap.has(proj.sector_id)) {
-      proj.sector = secMap.get(proj.sector_id);
-    }
-  });
-
-  return Promise.resolve();
 }
 
 function getAllProjects() {

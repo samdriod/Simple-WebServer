@@ -44,7 +44,9 @@ async function main() {
       } else if (req.query.sector === "Electricity") {
         data = await projectData.getProjectsBySector("Electricity");
       } else if (req.query.sector === "Food, Agriculture, and Land Use") {
-        data = await projectData.getProjectsBySector("Food, Agriculture, and Land Use");
+        data = await projectData.getProjectsBySector(
+          "Food, Agriculture, and Land Use"
+        );
       } else {
         throw new Error("Invalid sector");
       }
@@ -84,7 +86,13 @@ async function main() {
 }
 
 try {
-  main().then(() => console.log("Main Execution Successful."));
+  main().then(() =>
+    console.log(`
+--------------------------
+Main Execution Successful.
+--------------------------
+  `)
+  );
 } catch (error) {
   console.error(`Encountered error: ${error.message}`);
 }
