@@ -12,75 +12,8 @@ const express = require("express");
 const path = require("path");
 const projectData = require("./modules/projects");
 
-require("dotenv").config();
-require("pg");
-
-const Sequelize = require("sequelize");
-const { title } = require("process");
-
 async function main() {
   await projectData.Initialize();
-
-  const sequelize = new Sequelize(
-    process.env.PGDATABASE,
-    process.env.PGUSER,
-    process.env.PGPASSWORD,
-    {
-      host: process.env.PGHOST,
-      dialect: "postgres",
-      port: 5432,
-      dialectOptions: {
-        ssl: { rejectUnauthorized: false },
-      },
-    }
-  );
-
-  sequelize
-    .authenticate()
-    .then(() => {
-      console.log("Connection has been established successfully.");
-    })
-    .catch((err) => {
-      console.log("Unable to connect to the database:", err);
-    });
-  
-  const Sector = sequelize.define("Sector",
-    {
-      id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      sector_name: Sequelize.STRING
-    },
-    {
-      createdAt: false,
-      updatedAt: false
-    }
-  );
-
-  const Project = sequelize.define("Project",
-    {
-      id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      title: Sequelize.STRING,
-      feature_img_url: Sequelize.STRING,
-      summary_short: Sequelize.TEXT,
-      Intro_short: Sequelize.TEXT,
-      Impact: Sequelize.TEXT,
-      original_source_url: Sequelize.STRING
-    },
-    {
-      createdAt: false,
-      updatedAt: false
-    }
-  );
-
-  // Sector.hasMany(Project, {foreignKey: "sector_id"});
-  Project.belongsTo(Sector, {foreignKey: "sector_id"})
 
   let app = express();
   let HTTP_PORT = process.env.PORT || 3000;
