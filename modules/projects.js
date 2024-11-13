@@ -70,27 +70,19 @@ const Project = sequelize.define(
 Project.belongsTo(Sector, { foreignKey: "sector_id" });
 
 function Initialize() {
-  return new Promise((resolve, reject) => {
-    sequelize
-      .sync()
-      .then(() => {
-        resolve();
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+  return sequelize.sync();
+
 }
 
 function getAllProjects() {
-  return Promise.resolve(projects);
+  return Project.findAll({ include: [Sector] });
 }
 
 function getProjectById(projectId) {
-  const matchedProj = projects.find((proj) => proj.id === projectId);
-  return matchedProj
-    ? Promise.resolve(matchedProj)
-    : Promise.reject(new Error("Unable to find requested project"));
+  return Project.findOne({
+    include: [Sector],
+    where: { id: projectId },
+  });
 }
 
 function getProjectsBySector(sectorStr) {
