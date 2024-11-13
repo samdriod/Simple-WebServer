@@ -1,5 +1,5 @@
 /*********************************************************************************
- * BTI325 – Assignment 4
+ * BTI325 – Assignment 5
  * I declare that this assignment is my own work in accordance with Seneca Academic Policy.
  * No part of this assignment has been copied manually or electronically from any other source
  * (including web sites) or distributed to other students.
@@ -11,6 +11,34 @@
 const express = require("express");
 const path = require("path");
 const projectData = require("./modules/projects");
+
+require("dotenv").config();
+require("pg");
+
+const Sequelize = require("sequelize");
+
+const sequelize = new Sequelize(
+  process.env.PGDATABASE,
+  process.env.PGUSER,
+  process.env.PGPASSWORD,
+  {
+    host: process.env.PGHOST,
+    dialect: "postgres",
+    port: 5432,
+    dialectOptions: {
+      ssl: { rejectUnauthorized: false },
+    },
+  }
+);
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+  })
+  .catch((err) => {
+    console.log("Unable to connect to the database:", err);
+  });
 
 let app = express();
 let HTTP_PORT = process.env.PORT || 3000;
