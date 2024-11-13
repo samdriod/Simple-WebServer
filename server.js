@@ -16,6 +16,7 @@ require("dotenv").config();
 require("pg");
 
 const Sequelize = require("sequelize");
+const { title } = require("process");
 
 async function main() {
   await projectData.Initialize();
@@ -42,6 +43,44 @@ async function main() {
     .catch((err) => {
       console.log("Unable to connect to the database:", err);
     });
+  
+  const Sector = sequelize.define("Sector",
+    {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      sector_name: Sequelize.STRING
+    },
+    {
+      createdAt: false,
+      updatedAt: false
+    }
+  );
+
+  const Project = sequelize.define("Project",
+    {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      title: Sequelize.STRING,
+      feature_img_url: Sequelize.STRING,
+      summary_short: Sequelize.TEXT,
+      Intro_short: Sequelize.TEXT,
+      Impact: Sequelize.TEXT,
+      original_source_url: Sequelize.STRING
+    },
+    {
+      createdAt: false,
+      updatedAt: false
+    }
+  );
+
+  // Sector.hasMany(Project, {foreignKey: "sector_id"});
+  Project.belongsTo(Sector, {foreignKey: "sector_id"})
 
   let app = express();
   let HTTP_PORT = process.env.PORT || 3000;
