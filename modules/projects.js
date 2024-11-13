@@ -71,7 +71,6 @@ Project.belongsTo(Sector, { foreignKey: "sector_id" });
 
 function Initialize() {
   return sequelize.sync();
-
 }
 
 function getAllProjects() {
@@ -79,19 +78,41 @@ function getAllProjects() {
 }
 
 function getProjectById(projectId) {
-  return Project.findOne({
-    include: [Sector],
-    where: { id: projectId },
+  return new Promise((resolve, reject) => {
+    Project.findOne({
+      include: [Sector],
+      where: { id: projectId },
+    })
+      .then((project) => {
+        if (project !== null) {
+          resolve(project);
+        } else {
+          reject("Unable to find requested project");
+        }
+      })
+      .catch((error) => reject(error));
   });
 }
 
 function getProjectsBySector(sectorStr) {
-  const matchedSec = projects.filter((proj) =>
-    proj.sector.toLowerCase().includes(sectorStr.toLowerCase())
-  );
-  return matchedSec.length != 0
-    ? Promise.resolve(matchedSec)
-    : Promise.reject(new Error("Unable to find requested project"));
+  return new Promise((resolve, reject) => {
+    Project.findAll({
+      include: [
+        {
+          model: Sector,
+          where: { sector_name: { [Sequelize.Op.iLike]: `%${sectorStr}%` } },
+        },
+      ],
+    })
+      .then((projects) => {
+        if (projects !== null) {
+          resolve(projects);
+        } else {
+          reject("Unable to find requested projects");
+        }
+      })
+      .catch((error) => reject(error));
+  });
 }
 
 module.exports = {
