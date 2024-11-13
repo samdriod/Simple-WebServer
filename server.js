@@ -74,6 +74,11 @@ async function main() {
     }
   });
 
+
+  app.get("/solutions/addProject", async (req, res) => {
+    res.render(path.join(__dirname, "/public/views/addProject.ejs"));
+  });
+
   app.use((req, res, next) => {
     res.render(path.join(__dirname, "public/views/404.ejs"), {
       message: "So sorry, we're unable to find what you're looking for.",
