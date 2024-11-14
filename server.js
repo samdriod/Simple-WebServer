@@ -20,7 +20,7 @@ async function main() {
   let HTTP_PORT = process.env.PORT || 3000;
 
   app.use(express.static("public"));
-  app.use(express.urlencoded({extended: true}))
+  app.use(express.urlencoded({ extended: true }));
   app.set("view engine", "ejs");
   app.set("views", path.join(__dirname, "/public/views"));
 
@@ -84,13 +84,38 @@ async function main() {
   });
 
   app.post("/solutions/addProject", async (req, res) => {
-    const projectData = req.body;
     try {
-      await projects.addProject(projectData);
+      await projects.addProject(req.body);
       res.redirect(303, "/solutions/projects");
     } catch (error) {
       res.render(path.join(__dirname, "/public/views/500.ejs"), {
-        message:  `I'm sorry, but we have encountered the following error: ${error}`,
+        message: `I'm sorry, but we have encountered the following error: ${error}`,
+      });
+    }
+  });
+
+  app.get("/solutions/editProject/:id", async (req, res) => {
+    try {
+      const proj = await projects.getProjectById(req.body.id);
+      const sectorData = await projects.getAllSectors();
+      res.render(path.join(__dirname, "/public/views/editProject.ejs"), {
+        sectors: sectorData,
+        project: proj,
+      });
+    } catch (error) {
+      res.render(path.join(__dirname, "/public/views/404.ejs"), {
+        message: error,
+      });
+    }
+  });
+
+  app.post("/solutions/editProject", async (req, res) => {
+    try {
+      await projects.editProject(req.body.id);
+      res.redirect(303, "/solutions/projects");
+    } catch (error) {
+      res.render(path.join(__dirname, "/public/views/500.ejs"), {
+        message: `I'm sorry, but we have encountered the following error: ${error}`,
       });
     }
   });
