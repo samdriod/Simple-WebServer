@@ -96,7 +96,7 @@ async function main() {
 
   app.get("/solutions/editProject/:id", async (req, res) => {
     try {
-      const proj = await projects.getProjectById(req.body.id);
+      const proj = await projects.getProjectById(req.params.id);
       const sectorData = await projects.getAllSectors();
       res.render(path.join(__dirname, "/public/views/editProject.ejs"), {
         sectors: sectorData,
@@ -111,7 +111,7 @@ async function main() {
 
   app.post("/solutions/editProject", async (req, res) => {
     try {
-      await projects.editProject(req.body.id);
+      await projects.editProject(req.body.id, req.body);
       res.redirect(303, "/solutions/projects");
     } catch (error) {
       res.render(path.join(__dirname, "/public/views/500.ejs"), {

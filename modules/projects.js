@@ -135,6 +135,18 @@ function getAllSectors() {
   return Sector.findAll({});
 }
 
+function editProject(id, projectData) {
+  return new Promise((resolve, reject) => {
+    Project.update(projectData, { where: { id: id } })
+      .then(() => {
+        resolve();
+      })
+      .catch((error) => {
+        reject(error.errors[0].message);
+      });
+  });
+}
+
 module.exports = {
   Initialize,
   getAllProjects,
@@ -142,6 +154,7 @@ module.exports = {
   getProjectsBySector,
   addProject,
   getAllSectors,
+  editProject,
 };
 
 // sequelize

@@ -11,13 +11,13 @@
 <body>
     <%- include("partials/navbar", {page: "" }) %>
         <div class="container mx-auto px-5">
-            <div class="hero bg-base-200 p-6 rounded-lg">2
+            <div class="hero bg-base-200 p-6 rounded-lg">
                 <div class="hero-content text-center">
                     <div class="max-w-md">
-                        <h1 class="text-5xl font-bold">Edit Project: <%= project.title %>
+                        <h1 class="text-5xl font-bold">Edit Project
                         </h1>
-                        <p class="py-6">
-                            Edit your project here:
+                        <p class="text-3xl font-bold py-6">
+                            <%= project.title %>
                         </p>
                     </div>
                 </div>
@@ -33,10 +33,9 @@
                                 class="w-full  rounded-md px-3 py-2 ">
                         </div>
                         <div class="mb-6">
-                            <label for="feature_img_url" value="<%= project.feature_img_url %>"
-                                class="block font-medium my-2">Feature Image (URL)</label>
+                            <label for="feature_img_url" class="block font-medium my-2">Feature Image (URL)</label>
                             <input type="url" id="feature_img_url" name="feature_img_url" required=""
-                                class="w-full   rounded-md px-3 py-2 ">
+                                value="<%= project.feature_img_url %>" class="w-full   rounded-md px-3 py-2 ">
                         </div>
 
                         <div class="mb-6">
@@ -53,25 +52,23 @@
 
 
                         <div class="mb-6">
-                            <label for="intro_short" value="<%= project.intro_short %>"
-                                class="block font-medium my-2">Intro</label>
+                            <label for="intro_short" class="block font-medium my-2">Intro</label>
 
-                            <textarea id="intro_short" name="intro_short" required="" value="<%= project.intro_short %>"
-                                class="w-full rounded-md px-3 py-2 h-40"></textarea>
+                            <textarea id="intro_short" name="intro_short" required=""
+                                class="w-full rounded-md px-3 py-2 h-40"><%= project.intro_short %></textarea>
 
                         </div>
 
                         <div class="mb-6">
                             <label for="summary_short" class="block font-medium my-2">Short Summary</label>
                             <textarea id="summary_short" name="summary_short" required=""
-                                value="<%= project.summary_short %>"
-                                class="w-full rounded-md px-3 py-2  h-40"></textarea>
+                                class="w-full rounded-md px-3 py-2  h-40"><%= project.summary_short %></textarea>
                         </div>
 
                         <div class="mb-6">
                             <label for="impact" class="block font-medium my-2">Impact</label>
-                            <textarea id="impact" name="impact" required="" value="<%= project.impact %>"
-                                class="w-full rounded-md px-3 py-2  h-40"></textarea>
+                            <textarea id="impact" name="impact" required=""
+                                class="w-full rounded-md px-3 py-2  h-40"><%= project.impact %></textarea>
                         </div>
 
                         <div class="mb-6">
