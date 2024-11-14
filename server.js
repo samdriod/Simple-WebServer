@@ -10,15 +10,17 @@
  ********************************************************************************/
 const express = require("express");
 const path = require("path");
-const projectData = require("./modules/projects");
+const projects = require("./modules/projects");
+const exp = require("constants");
 
 async function main() {
-  await projectData.Initialize();
+  await projects.Initialize();
 
   let app = express();
   let HTTP_PORT = process.env.PORT || 3000;
 
   app.use(express.static("public"));
+  app.use(express.urlencoded({extended: true}))
   app.set("view engine", "ejs");
   app.set("views", path.join(__dirname, "/public/views"));
 
@@ -34,17 +36,17 @@ async function main() {
     try {
       let data;
       if (Object.keys(req.query).length === 0) {
-        data = await projectData.getAllProjects();
+        data = await projects.getAllProjects();
       } else if (req.query.sector === "Land Sinks") {
-        data = await projectData.getProjectsBySector("Land Sinks");
+        data = await projects.getProjectsBySector("Land Sinks");
       } else if (req.query.sector === "Industry") {
-        data = await projectData.getProjectsBySector("Industry");
+        data = await projects.getProjectsBySector("Industry");
       } else if (req.query.sector === "Transportation") {
-        data = await projectData.getProjectsBySector("Transportation");
+        data = await projects.getProjectsBySector("Transportation");
       } else if (req.query.sector === "Electricity") {
-        data = await projectData.getProjectsBySector("Electricity");
+        data = await projects.getProjectsBySector("Electricity");
       } else if (req.query.sector === "Food, Agriculture, and Land Use") {
-        data = await projectData.getProjectsBySector(
+        data = await projects.getProjectsBySector(
           "Food, Agriculture, and Land Use"
         );
       } else {
@@ -63,7 +65,7 @@ async function main() {
 
   app.get("/solutions/projects/:id", async (req, res) => {
     try {
-      let data = await projectData.getProjectById(parseInt(req.params.id));
+      let data = await projects.getProjectById(parseInt(req.params.id));
       res.render(path.join(__dirname, "/public/views/project.ejs"), {
         project: data,
       });
@@ -74,9 +76,23 @@ async function main() {
     }
   });
 
-
   app.get("/solutions/addProject", async (req, res) => {
-    res.render(path.join(__dirname, "/public/views/addProject.ejs"));
+    const sectorData = await projects.getAllSectors();
+    res.render(path.join(__dirname, "/public/views/addProject.ejs"), {
+      sectors: sectorData,
+    });
+  });
+
+  app.post("/solutions/addProject", async (req, res) => {
+    const projectData = req.body;
+    try {
+      await projects.addProject(projectData);
+      res.redirect(303, "/solutions/projects");
+    } catch (error) {
+      res.render(path.join(__dirname, "/public/views/500.ejs"), {
+        message:  `I'm sorry, but we have encountered the following error: ${error}`,
+      });
+    }
   });
 
   app.use((req, res, next) => {

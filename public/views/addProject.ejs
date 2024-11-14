@@ -40,27 +40,11 @@
                         <div class="mb-6">
                             <label for="sector_id" class="block font-medium my-2">Sector</label>
                             <select id="sector_id" name="sector_id" required="" class="w-full rounded-md px-3 py-2 ">
-
-                                <option value="1">
-                                    Land Sinks
-                                </option>
-
-                                <option value="2">
-                                    Industry
-                                </option>
-
-                                <option value="3">
-                                    Transportation
-                                </option>
-
-                                <option value="4">
-                                    Electricity
-                                </option>
-
-                                <option value="5">
-                                    Food, Agriculture, and Land Use
-                                </option>
-
+                                <% sectors.forEach(sector=> { %>
+                                    <option value="<%= sector.id %>">
+                                        <%= sector.sector_name %>
+                                    </option>
+                                    <% }); %>
                             </select>
                         </div>
 

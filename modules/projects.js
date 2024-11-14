@@ -115,12 +115,35 @@ function getProjectsBySector(sectorStr) {
   });
 }
 
+function addProject(projectData) {
+  return new Promise(async (resolve, reject) => {
+    Project.create(projectData)
+      .then(() => {
+        resolve();
+      })
+      .catch((error) => {
+        reject(error.errors[0].message);
+      });
+
+    // await sequelize.query(
+    //   `SELECT setval(pg_get_serial_sequence('"Projects"', 'id'), (SELECT MAX(id) FROM "Projects"))`
+    // );
+  });
+}
+
+function getAllSectors() {
+  return Sector.findAll({});
+}
+
 module.exports = {
   Initialize,
   getAllProjects,
   getProjectById,
   getProjectsBySector,
+  addProject,
+  getAllSectors,
 };
+
 // sequelize
 //   .sync()
 //   .then(async () => {
