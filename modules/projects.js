@@ -122,7 +122,7 @@ function addProject(projectData) {
         resolve();
       })
       .catch((error) => {
-        reject(error.errors[0].message);
+        reject(error.message);
       });
 
     // await sequelize.query(
@@ -142,7 +142,7 @@ function editProject(id, projectData) {
         resolve();
       })
       .catch((error) => {
-        reject(error.errors[0].message);
+        reject(error.message);
       });
   });
 }
@@ -156,7 +156,8 @@ function deleteProject(id) {
         resolve();
       })
       .catch((error) => {
-        reject(error.errors[0].message);
+        console.log(error);
+        reject(error.message);
       });
   });
 }

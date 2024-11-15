@@ -4,7 +4,7 @@
  * No part of this assignment has been copied manually or electronically from any other source
  * (including web sites) or distributed to other students.
  *
- * Name: Samip Karki Student      ID: 141867234      Date: 2024/19/01
+ * Name: Samip Karki Student      ID: 141867234      Date: 2024/10/15
  * Published URL: https://climatesolutions.vercel.app/
  * URL maybe subject to change please pull from github and check the README for latest URL
  ********************************************************************************/
@@ -122,7 +122,7 @@ async function main() {
 
   app.get("/solutions/deleteProject/:id", async (req, res) => {
     try {
-      await projects.deleteProject(req.body.id);
+      await projects.deleteProject(req.params.id);
       res.redirect(303, "/solutions/projects");
     } catch (error) {
       res.render(path.join(__dirname, "/public/views/500.ejs"), {
