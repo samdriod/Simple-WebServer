@@ -120,6 +120,17 @@ async function main() {
     }
   });
 
+  app.get("/solutions/deleteProject/:id", async (req, res) => {
+    try {
+      await projects.deleteProject(req.body.id);
+      res.redirect(303, "/solutions/projects");
+    } catch (error) {
+      res.render(path.join(__dirname, "/public/views/500.ejs"), {
+        message: `I'm sorry, but we have encountered the following error: ${error}`,
+      });
+    }
+  });
+
   app.use((req, res, next) => {
     res.render(path.join(__dirname, "public/views/404.ejs"), {
       message: "So sorry, we're unable to find what you're looking for.",

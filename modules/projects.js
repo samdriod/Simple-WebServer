@@ -147,6 +147,20 @@ function editProject(id, projectData) {
   });
 }
 
+function deleteProject(id) {
+  return new Promise((resolve, reject) => {
+    Project.destroy({
+      where: { id: id },
+    })
+      .then(() => {
+        resolve();
+      })
+      .catch((error) => {
+        reject(error.errors[0].message);
+      });
+  });
+}
+
 module.exports = {
   Initialize,
   getAllProjects,
@@ -155,6 +169,7 @@ module.exports = {
   addProject,
   getAllSectors,
   editProject,
+  deleteProject,
 };
 
 // sequelize

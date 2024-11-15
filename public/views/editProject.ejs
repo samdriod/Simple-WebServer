@@ -82,9 +82,13 @@
                         <button type="submit" class="btn btn-primary btn-lg px-6 py-3 text-lg">Update Project</button>
                     </div>
                     <div>
+                        <a href="/solutions/deleteProject/<%= project.id %>" class="btn btn-error btn-sm">Delete Project</a>
+                    </div>
+                    <div>
                         <input type="hidden" name="id" value="<%= project.id %>">
                     </div>
                 </form>
+                <br>
             </div>
         </div>
 </body>
