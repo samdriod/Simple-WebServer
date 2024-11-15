@@ -5,7 +5,7 @@
  * (including web sites) or distributed to other students.
  *
  * Name: Samip Karki Student      ID: 141867234      Date: 2024/10/15
- * Published URL: https://climatesolutions.vercel.app/
+ * Published URL: https://simple-web-server-iota.vercel.app/
  * URL maybe subject to change please pull from github and check the README for latest URL
  ********************************************************************************/
 const express = require("express");
