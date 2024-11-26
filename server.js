@@ -1,16 +1,17 @@
 /*********************************************************************************
- * BTI325 – Assignment 5
+ * BTI325 – Assignment 6
  * I declare that this assignment is my own work in accordance with Seneca Academic Policy.
  * No part of this assignment has been copied manually or electronically from any other source
  * (including web sites) or distributed to other students.
  *
- * Name: Samip Karki Student      ID: 141867234      Date: 2024/10/15
+ * Name: Samip Karki    Student ID: 141867234      Date: 2024/11/15
  * Published URL: https://simple-web-server-iota.vercel.app/
  * URL maybe subject to change please pull from github and check the README for latest URL
  ********************************************************************************/
 const express = require("express");
 const path = require("path");
 const projects = require("./modules/projects");
+const authData = require("./modules/auth-service");
 const exp = require("constants");
 
 async function main() {
