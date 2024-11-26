@@ -16,6 +16,7 @@ const exp = require("constants");
 
 async function main() {
   await projects.Initialize();
+  await authData.initialize();
 
   let app = express();
   let HTTP_PORT = process.env.PORT || 3000;
