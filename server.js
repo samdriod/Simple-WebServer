@@ -24,12 +24,14 @@ async function main() {
 
   app.use(express.static("public"));
   app.use(express.urlencoded({ extended: true }));
-  app.use(clientsessions({
-    cookieName: "session",
-    secret: "longkeyqwepoi12323423",
-    duration: 2 * 60 * 1000,
-    activeDuration: 60 * 1000
-  }));
+  app.use(
+    clientsessions({
+      cookieName: "session",
+      secret: "longkeyqwepoi12323423",
+      duration: 2 * 60 * 1000,
+      activeDuration: 60 * 1000,
+    })
+  );
   app.use((req, res, next) => {
     res.locals.session = req.session;
     next();
@@ -145,36 +147,66 @@ async function main() {
     }
   });
 
-  app.get("/login", ensureLogin, (req,res) => {
-    res.render(path.join(__dirname, "/public/views/login.ejs"), {errorMessage: "", userName: ""});
+  app.get("/login", ensureLogin, (req, res) => {
+    res.render(path.join(__dirname, "/public/views/login.ejs"), {
+      errorMessage: "",
+      userName: "",
+    });
   });
 
-  app.post("/login", ensureLogin, (req,res) => {
-
-  });
-
-  app.get("/register", ensureLogin, (req,res) => {
-    res.render(path.join(__dirname, "/public/views/register.ejs"), {errorMessage: "", successMessage: "", userName: ""});
-  });
-
-  app.post("/register", ensureLogin, (req,res) => {
-    authData.registerUser(req.body)
-      .then(() => {
-        res.render(path.join(__dirname, "/public/views/register.ejs"), {errorMessage: "", successMessage: "User created", userName: ""});
+  app.post("/login", ensureLogin, (req, res) => {
+    req.body.userAgent = req.get("User-Agent");
+    authData
+      .checkUser(req.body)
+      .then((user) => {
+        req.session.user = user;
+        res.redirect("/solutions/projects");
       })
-      .catch(err => {
-        res.render(path.join(__dirname, "/public/views/register.ejs"), {errorMessage: err, successMessage: "", userName: req.body.userName});
+      .catch((err) => {
+        res.render(path.join(__dirname, "/public/views/login.ejs"), {
+          errorMessage: err,
+          userName: req.body.userName,
+        });
       });
   });
 
+  app.get("/register", ensureLogin, (req, res) => {
+    res.render(path.join(__dirname, "/public/views/register.ejs"), {
+      errorMessage: "",
+      successMessage: "",
+      userName: "",
+    });
+  });
 
-  app.get("/logout", ensureLogin, (req,res) => {
+  app.post("/register", ensureLogin, (req, res) => {
+    authData
+      .registerUser(req.body)
+      .then(() => {
+        res.render(path.join(__dirname, "/public/views/register.ejs"), {
+          errorMessage: "",
+          successMessage: "User created",
+          userName: "",
+        });
+      })
+      .catch((err) => {
+        res.render(path.join(__dirname, "/public/views/register.ejs"), {
+          errorMessage: err,
+          successMessage: "",
+          userName: req.body.userName,
+        });
+      });
+  });
+
+  app.get("/logout", ensureLogin, (req, res) => {
     req.session.reset();
     res.redirect("/");
   });
 
-  app.get("/userHistory", ensureLogin, (req,res) => {
-    res.render(path.join(__dirname, "/public/views/userHistory.ejs"), {errorMessage: "", userName: ""});
+  app.get("/userHistory", ensureLogin, (req, res) => {
+    res.render(path.join(__dirname, "/public/views/userHistory.ejs"), {
+      errorMessage: "",
+      userName: "",
+    });
   });
 
   app.use((req, res, next) => {
