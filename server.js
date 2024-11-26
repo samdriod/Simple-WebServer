@@ -10,6 +10,7 @@
  ********************************************************************************/
 const express = require("express");
 const path = require("path");
+const clientsessions = require("client-sessions");
 const projects = require("./modules/projects");
 const authData = require("./modules/auth-service");
 const exp = require("constants");
@@ -23,6 +24,17 @@ async function main() {
 
   app.use(express.static("public"));
   app.use(express.urlencoded({ extended: true }));
+  app.use(clientsessions({
+    cookieName: "session",
+    secret: "longkeyqwepoi12323423",
+    duration: 2 * 60 * 1000,
+    activeDuration: 60 * 1000
+  }));
+  app.use((req, res, next) => {
+    res.locals.session = req.session;
+    next();
+  });
+
   app.set("view engine", "ejs");
   app.set("views", path.join(__dirname, "/public/views"));
 
@@ -78,14 +90,14 @@ async function main() {
     }
   });
 
-  app.get("/solutions/addProject", async (req, res) => {
+  app.get("/solutions/addProject", ensureLogin, async (req, res) => {
     const sectorData = await projects.getAllSectors();
     res.render(path.join(__dirname, "/public/views/addProject.ejs"), {
       sectors: sectorData,
     });
   });
 
-  app.post("/solutions/addProject", async (req, res) => {
+  app.post("/solutions/addProject", ensureLogin, async (req, res) => {
     try {
       await projects.addProject(req.body);
       res.redirect(303, "/solutions/projects");
@@ -96,7 +108,7 @@ async function main() {
     }
   });
 
-  app.get("/solutions/editProject/:id", async (req, res) => {
+  app.get("/solutions/editProject/:id", ensureLogin, async (req, res) => {
     try {
       const proj = await projects.getProjectById(req.params.id);
       const sectorData = await projects.getAllSectors();
@@ -111,7 +123,7 @@ async function main() {
     }
   });
 
-  app.post("/solutions/editProject", async (req, res) => {
+  app.post("/solutions/editProject", ensureLogin, async (req, res) => {
     try {
       await projects.editProject(req.body.id, req.body);
       res.redirect(303, "/solutions/projects");
@@ -122,7 +134,7 @@ async function main() {
     }
   });
 
-  app.get("/solutions/deleteProject/:id", async (req, res) => {
+  app.get("/solutions/deleteProject/:id", ensureLogin, async (req, res) => {
     try {
       await projects.deleteProject(req.params.id);
       res.redirect(303, "/solutions/projects");
@@ -142,6 +154,14 @@ async function main() {
   app.listen(HTTP_PORT, () => {
     console.log(`Listening on ${HTTP_PORT}`);
   });
+}
+
+function ensureLogin(req, res, next) {
+  if (!req.session.user) {
+    res.redirect("/login");
+  } else {
+    next();
+  }
 }
 
 try {

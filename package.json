@@ -11,6 +11,7 @@
   "author": "Samip Karki",
   "license": "ISC",
   "dependencies": {
+    "client-sessions": "^0.8.0",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.21.0",
