@@ -145,6 +145,38 @@ async function main() {
     }
   });
 
+  app.get("/login", ensureLogin, (req,res) => {
+    res.render(path.join(__dirname, "/public/views/login.ejs"), {errorMessage: "", userName: ""});
+  });
+
+  app.post("/login", ensureLogin, (req,res) => {
+
+  });
+
+  app.get("/register", ensureLogin, (req,res) => {
+    res.render(path.join(__dirname, "/public/views/register.ejs"), {errorMessage: "", successMessage: "", userName: ""});
+  });
+
+  app.post("/register", ensureLogin, (req,res) => {
+    authData.registerUser(req.body)
+      .then(() => {
+        res.render(path.join(__dirname, "/public/views/register.ejs"), {errorMessage: "", successMessage: "User created", userName: ""});
+      })
+      .catch(err => {
+        res.render(path.join(__dirname, "/public/views/register.ejs"), {errorMessage: err, successMessage: "", userName: req.body.userName});
+      });
+  });
+
+
+  app.get("/logout", ensureLogin, (req,res) => {
+    req.session.reset();
+    res.redirect("/");
+  });
+
+  app.get("/userHistory", ensureLogin, (req,res) => {
+    res.render(path.join(__dirname, "/public/views/userHistory.ejs"), {errorMessage: "", userName: ""});
+  });
+
   app.use((req, res, next) => {
     res.render(path.join(__dirname, "public/views/404.ejs"), {
       message: "So sorry, we're unable to find what you're looking for.",
