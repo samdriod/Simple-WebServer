@@ -56,7 +56,37 @@ function registerUser(userData) {
 }
 
 function checkUser(userData) {
-    
+  return new Promise((resolve, reject) => {
+    User.findOne({ userName: userData.userName })
+      .then((user) => {
+        if (user === null) {
+          reject(`Unable to find user: ${userData.userName}`);
+          return;
+        }
+
+        if (user.password !== userData.password) {
+          reject(`Incorrect Password for user: ${userData.userName}`);
+          return;
+        } else {
+          if (user.loginHistory.lenght === 8) {
+            user.loginHistory.pop();
+          }
+          user.loginHistory.unshift({
+            dataTime: new Date().toString(),
+            userAgent: userData.userAgent,
+          });
+          User.updateOne(
+            { userName: userData.userName },
+            { $set: { loginHistory: user.loginHistory } }
+          )
+            .then(() => resolve())
+            .catch((err) =>
+              reject(`There was an error verifying the user: ${err}`)
+            );
+        }
+      })
+      .catch((error) => reject(`Unable to find user: ${userData.userName}`));
+  });
 }
 
 module.exports = { initialize, registerUser, checkUser };
