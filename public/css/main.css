@@ -1981,6 +1981,10 @@ html {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.right-0 {
+  right: 0px;
+}
+
 .m-4 {
   margin: 1rem;
 }
@@ -2163,6 +2167,10 @@ html {
 
 .bg-opacity-60 {
   --tw-bg-opacity: 0.6;
+}
+
+.p-2 {
+  padding: 0.5rem;
 }
 
 .p-6 {
