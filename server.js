@@ -147,14 +147,14 @@ async function main() {
     }
   });
 
-  app.get("/login", ensureLogin, (req, res) => {
+  app.get("/login", (req, res) => {
     res.render(path.join(__dirname, "/public/views/login.ejs"), {
       errorMessage: "",
       userName: "",
     });
   });
 
-  app.post("/login", ensureLogin, (req, res) => {
+  app.post("/login", (req, res) => {
     req.body.userAgent = req.get("User-Agent");
     authData
       .checkUser(req.body)
@@ -170,7 +170,7 @@ async function main() {
       });
   });
 
-  app.get("/register", ensureLogin, (req, res) => {
+  app.get("/register", (req, res) => {
     res.render(path.join(__dirname, "/public/views/register.ejs"), {
       errorMessage: "",
       successMessage: "",
@@ -178,7 +178,7 @@ async function main() {
     });
   });
 
-  app.post("/register", ensureLogin, (req, res) => {
+  app.post("/register", (req, res) => {
     authData
       .registerUser(req.body)
       .then(() => {
