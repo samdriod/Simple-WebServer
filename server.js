@@ -4,7 +4,7 @@
  * No part of this assignment has been copied manually or electronically from any other source
  * (including web sites) or distributed to other students.
  *
- * Name: Samip Karki    Student ID: 141867234      Date: 2024/11/15
+ * Name: Samip Karki    Student ID: 141867234      Date: 2024/11/29
  * Published URL: https://simple-web-server-iota.vercel.app/
  * URL maybe subject to change please pull from github and check the README for latest URL
  ********************************************************************************/
@@ -203,10 +203,7 @@ async function main() {
   });
 
   app.get("/userHistory", ensureLogin, (req, res) => {
-    res.render(path.join(__dirname, "/public/views/userHistory.ejs"), {
-      // session: req.session
-      // session: {userName: "test", email: "test@gamil.com", loginHistory: [{dataTime: "wed 2020", userAgent: "linux"}]}
-    });
+    res.render(path.join(__dirname, "/public/views/userHistory.ejs"));
   });
 
   app.use((req, res, next) => {
