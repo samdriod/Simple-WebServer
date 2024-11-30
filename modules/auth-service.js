@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 require("dotenv").config();
 let Schema = mongoose.Schema;
 
@@ -40,17 +41,25 @@ function registerUser(userData) {
       return;
     }
 
-    let newUser = new User(userData);
-    newUser
-      .save()
-      .then(() => resolve())
-      .catch((error) => {
-        if (error.code === 11000) {
-          reject("User Name already taken");
-        } else {
-          reject(`There was an error creating the user: ${error}`);
-        }
-        return;
+    bcrypt
+      .hash(userData.password, 10)
+      .then((hash) => {
+        userData.password = hash;
+
+        let newUser = new User(userData);
+        newUser
+          .save()
+          .then(() => resolve())
+          .catch((error) => {
+            if (error.code === 11000) {
+              reject("User Name already taken");
+            } else {
+              reject(`There was an error creating the user: ${error}`);
+            }
+          });
+      })
+      .catch((err) => {
+        reject(`There was an error hashing the password: ${err}`);
       });
   });
 }
@@ -58,17 +67,19 @@ function registerUser(userData) {
 function checkUser(userData) {
   return new Promise((resolve, reject) => {
     User.findOne({ userName: userData.userName })
-      .then((user) => {
+      .then(async (user) => {
         if (user === null) {
           reject(`Unable to find user: ${userData.userName}`);
           return;
         }
 
-        if (user.password !== userData.password) {
+        let passMatch = await bcrypt.compare(userData.password, user.password);
+
+        if (!passMatch) {
           reject(`Incorrect Password for user: ${userData.userName}`);
           return;
         } else {
-          if (user.loginHistory.lenght === 8) {
+          if (user.loginHistory.length === 8) {
             user.loginHistory.pop();
           }
           user.loginHistory.unshift({
@@ -79,7 +90,7 @@ function checkUser(userData) {
             { userName: userData.userName },
             { $set: { loginHistory: user.loginHistory } }
           )
-            .then(() => resolve())
+            .then(() => resolve(user))
             .catch((err) =>
               reject(`There was an error verifying the user: ${err}`)
             );
