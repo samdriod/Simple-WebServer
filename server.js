@@ -204,8 +204,8 @@ async function main() {
 
   app.get("/userHistory", ensureLogin, (req, res) => {
     res.render(path.join(__dirname, "/public/views/userHistory.ejs"), {
-      errorMessage: "",
-      userName: "",
+      session: req.session
+      // session: {userName: "test", email: "test@gamil.com", loginHistory: [{dataTime: "wed 2020", userAgent: "linux"}]}
     });
   });
 
