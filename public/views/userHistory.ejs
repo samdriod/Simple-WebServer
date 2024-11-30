@@ -33,7 +33,8 @@
                         <% session.user.loginHistory.forEach( hist => { %> 
                         <tr>
                             <td>
-                                <div class="font-bold"><%= hist.dateTime %></div>
+                                <%# made typo when creating loginHistory Schema so I am just using data instead of date sorry %>
+                                <div class="font-bold"><%= hist.dataTime %></div>
                             </td>
                             <td class="text-center">
                                 <div class="font-bold"><%= hist.userAgent %></div>
