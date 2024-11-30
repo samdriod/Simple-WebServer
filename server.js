@@ -13,6 +13,7 @@ const path = require("path");
 const clientsessions = require("client-sessions");
 const projects = require("./modules/projects");
 const authData = require("./modules/auth-service");
+const helmet = require("helmet");
 const exp = require("constants");
 
 async function main() {
@@ -24,6 +25,7 @@ async function main() {
 
   app.use(express.static("public"));
   app.use(express.urlencoded({ extended: true }));
+  app.use(helmet());
   app.use(
     clientsessions({
       cookieName: "session",
